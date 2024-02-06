@@ -33,7 +33,7 @@
             <td>{{reader.name}}</td>
             <td>{{reader.contact}}</td>
             <td>
-                <button (click)="saveReader(reader)" class="btn btn-outline-info mx-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button  (click)="saveReader(reader)" class="btn btn-outline-info mx-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-journal-text" viewBox="0 0 16 16">
                         <path
@@ -71,14 +71,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-4" id="exampleModalLabel">Reader : {{recentSavedReader.name}}</h1>
+          <h1 class="modal-title fs-4" id="exampleModalLabel">Reader : {{recentSavedReader?.name}}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p class="fs-5">ID : {{recentSavedReader.readerId}}</p>
-          <p class="fs-5">NIC : {{recentSavedReader.nic}}</p>
-          <p class="fs-5">Contact : {{recentSavedReader.contact}}</p>
-          <p class="fs-5">Address : {{recentSavedReader.address}}</p>
+          <p class="fs-5">ID : {{recentSavedReader?.readerId}}</p>
+          <p class="fs-5">NIC : {{recentSavedReader?.nic}}</p>
+          <p class="fs-5">Contact : {{recentSavedReader?.contact}}</p>
+          <p class="fs-5">Address : {{recentSavedReader?.address}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">Close</button>
