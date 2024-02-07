@@ -29,7 +29,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let reader of readersList">
-            <th scope="row">{{reader.readerId}}</th>
+            <th scope="row">RID#{{reader.readerId}}</th>
             <td>{{reader.name}}</td>
             <td>{{reader.contact}}</td>
             <td>
@@ -44,7 +44,7 @@
                             d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
                     </svg>
                 </button>
-                <button class="btn btn-outline-success mx-1">
+                <button class="btn btn-outline-success mx-1" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path
@@ -53,7 +53,7 @@
                             d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                     </svg>
                 </button>
-                <button class="btn btn-outline-danger mx-1">
+                <button (click)="saveReader(reader)" class="btn btn-outline-danger mx-1" data-bs-toggle="modal" data-bs-target="#delete-reader-modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash3" viewBox="0 0 16 16">
                         <path
@@ -108,7 +108,7 @@
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Contact Number :</label>
-            <input type="number" [(ngModel)]="newReader.contact" name="contact" class="form-control" id="reader-contact">
+            <input type="text" [(ngModel)]="newReader.contact" name="contact" class="form-control" id="reader-contact">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Address :</label>
@@ -124,3 +124,22 @@
   </div>
 </div>
 <!-- add reader modal end -->
+
+<!-- delete reader modal starts -->
+<div class="modal fade" id="delete-reader-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content">
+      <div class="modal-content rounded-3 shadow" >
+        <div class="modal-body p-4 text-center">
+          <h5 class="mb-0">Delete Reader</h5>
+          <p class="mb-0">Are you sure to delete <strong>'{{recentSavedReader?.name}}'</strong> ?</p>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button type="button" (click)="deleteReader(recentSavedReader.readerId)" class="btn btn-lg fs-6 col-6 py-3 m-0 rounded-0 border-end" data-bs-dismiss="modal"><strong class="text-danger">Delete</strong></button>
+          <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- delete reader modal end -->

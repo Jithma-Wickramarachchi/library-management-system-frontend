@@ -53,9 +53,17 @@ export class ReadersComponent {
     })
   }
   deleteReader(id: string) {
-    this.http.delete('http://localhost:8080/reader/delete/{id}').subscribe((data) => {
+    this.http.delete(`http://localhost:8080/reader/delete/${id}`).subscribe((data) => {
       this.readersList = data;
       console.log(this.readersList)
+    }, () =>{
+      Swal.fire({
+        title: "Successfull!",
+        text: "Reader Deleted successfully",
+        icon: "success"
+      });
+      this.clearNewReader();
+      this.loadReaders();
     })
   }
   addReader() {
