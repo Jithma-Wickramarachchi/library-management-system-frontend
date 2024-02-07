@@ -5,7 +5,7 @@
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
-            <button class="btn btn-outline-primary justify-content-end ms-5 float-right"><svg
+            <button class="btn btn-outline-primary justify-content-end ms-5 float-right" data-bs-toggle="modal" data-bs-target="#add-reader-modal"><svg
                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-person-plus-fill" viewBox="0 0 16 16">
                     <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
@@ -68,7 +68,7 @@
 
 <!-- details modal starts -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-4" id="exampleModalLabel">Reader : {{recentSavedReader?.name}}</h1>
@@ -87,3 +87,40 @@
     </div>
   </div>
 <!-- details modal end -->
+
+<!-- add reader modal start -->
+<div class="modal fade" id="add-reader-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a Reader</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Name :</label>
+            <input type="text" [(ngModel)]="newReader.name" name="name" class="form-control" id="reader-name">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">NIC Number :</label>
+            <input type="text" [(ngModel)]="newReader.nic" name="nic" class="form-control" id="reader-nic">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Contact Number :</label>
+            <input type="text" [(ngModel)]="newReader.contact" name="contact" class="form-control" id="reader-contact">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Address :</label>
+            <input type="text" [(ngModel)]="newReader.address" name="address" class="form-control" id="reader-address">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="addReader()" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- add reader modal end -->

@@ -15,14 +15,25 @@ export class ReadersComponent {
 
   private http;
   public readersList: any;
-  public recentSavedReader : any;
+  public recentSavedReader: any;
+
+  public newReader = {
+    name: null,
+    nic: null,
+    contact: null,
+    address: null
+  }
 
   constructor(httpClient: HttpClient) {
     this.http = httpClient;
   }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     this.loadReaders();
+  }
+
+  saveReader(reader: any) {
+    this.recentSavedReader = reader;
   }
 
   loadReaders() {
@@ -31,9 +42,17 @@ export class ReadersComponent {
       console.log(this.readersList)
     })
   }
-
-  saveReader(reader : any){
-    this.recentSavedReader = reader;
+  deleteReader(id: string) {
+    this.http.delete('http://localhost:8080/reader/delete/{id}').subscribe((data) => {
+      this.readersList = data;
+      console.log(this.readersList)
+    })
+  }
+  addReader() {
+    this.http.post('http://localhost:8080/reader/add', this.newReader).subscribe((data) => {
+      console.log(data);
+      this.ngOnInit();
+    })
   }
 
 }
