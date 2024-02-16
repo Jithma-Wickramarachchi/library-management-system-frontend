@@ -1,8 +1,8 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_BOOTSTRAP_LISTENER, Component } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, Component, NgModule} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { bootstrapApplication } from '@angular/platform-browser';
+import { NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   templateUrl: './readers.component.html',
   styleUrl: './readers.component.css'
 })
+
 export class ReadersComponent {
 
   private http;
