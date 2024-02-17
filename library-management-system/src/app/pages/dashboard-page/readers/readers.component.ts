@@ -1,8 +1,8 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_BOOTSTRAP_LISTENER, Component } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, Component, NgModule} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { bootstrapApplication } from '@angular/platform-browser';
+import { NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   templateUrl: './readers.component.html',
   styleUrl: './readers.component.css'
 })
+
 export class ReadersComponent {
 
   private http;
@@ -47,13 +48,13 @@ export class ReadersComponent {
   }
 
   loadReaders() {
-    this.http.get('http://localhost:8080/reader/list').subscribe((data) => {
+    this.http.get('http://localhost:8080/reader').subscribe((data) => {
       this.readersList = data;
       console.log(this.readersList)
     })
   }
   deleteReader(id: string) {
-    this.http.delete(`http://localhost:8080/reader/delete/${id}`).subscribe((data) => {
+    this.http.delete(`http://localhost:8080/reader/${id}`).subscribe((data) => {
       this.readersList = data;
       console.log(this.readersList)
     }, () =>{
@@ -67,7 +68,7 @@ export class ReadersComponent {
     })
   }
   addReader() {
-    this.http.post('http://localhost:8080/reader/add', this.newReader).subscribe((data) => {
+    this.http.post('http://localhost:8080/reader', this.newReader).subscribe((data) => {
       console.log(data);
       Swal.fire({
         title: "Successfull!",
