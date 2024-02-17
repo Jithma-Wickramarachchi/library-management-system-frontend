@@ -48,13 +48,13 @@ export class ReadersComponent {
   }
 
   loadReaders() {
-    this.http.get('http://localhost:8080/reader/list').subscribe((data) => {
+    this.http.get('http://localhost:8080/reader').subscribe((data) => {
       this.readersList = data;
       console.log(this.readersList)
     })
   }
   deleteReader(id: string) {
-    this.http.delete(`http://localhost:8080/reader/delete/${id}`).subscribe((data) => {
+    this.http.delete(`http://localhost:8080/reader/${id}`).subscribe((data) => {
       this.readersList = data;
       console.log(this.readersList)
     }, () =>{
@@ -68,7 +68,7 @@ export class ReadersComponent {
     })
   }
   addReader() {
-    this.http.post('http://localhost:8080/reader/add', this.newReader).subscribe((data) => {
+    this.http.post('http://localhost:8080/reader', this.newReader).subscribe((data) => {
       console.log(data);
       Swal.fire({
         title: "Successfull!",
