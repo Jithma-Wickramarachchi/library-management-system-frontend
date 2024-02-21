@@ -19,6 +19,7 @@ export class ReadersComponent {
   private http;
   public readersList: any;
   public recentSavedReader: any;
+  public recentSavedUpdateReader: any;
 
   public newReader = {
     name: null,
@@ -38,8 +39,18 @@ export class ReadersComponent {
   saveReader(reader: any) {
     this.recentSavedReader = reader;
   }
+  saveReaderWithId(reader : any){
+    this.recentSavedUpdateReader = reader;
+  }
   clearNewReader(){
     this.newReader = {
+      name: null,
+      nic: null,
+      contact: null,
+      address: null
+    };
+    this.recentSavedUpdateReader = {
+      readerId : null,
       name: null,
       nic: null,
       contact: null,
@@ -73,6 +84,18 @@ export class ReadersComponent {
       Swal.fire({
         title: "Successfull!",
         text: "Reader \'"+this.newReader.name+"\' added successfully",
+        icon: "success"
+      });
+      this.clearNewReader();
+      this.ngOnInit();
+    })
+  }
+  updateReader() {
+    this.http.post('http://localhost:8080/reader', this.recentSavedUpdateReader).subscribe((data) => {
+      console.log(data);
+      Swal.fire({
+        title: "Successfull!",
+        text: "Reader \'"+this.recentSavedUpdateReader.name+"\' Updated successfully",
         icon: "success"
       });
       this.clearNewReader();

@@ -36,7 +36,7 @@
       <td>{{reader.address}}</td>
       <td>{{reader.contact}}</td>
       <td>
-        <button (click)="saveReader(reader)" class="btn btn-outline-success mx-1" data-bs-toggle="modal"
+        <button (click)="saveReaderWithId(reader)" class="btn btn-outline-success mx-1" data-bs-toggle="modal"
         data-bs-target="#update-reader-modal">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
             viewBox="0 0 16 16">
@@ -108,26 +108,30 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
+            <label for="recipient-name" class="col-form-label disabled" >ReaderID :</label>
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.readerId" [ngModelOptions]="{standalone:true}" name="readerId" class="form-control" id="reader-id" disabled>
+          </div>
+          <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Name :</label>
-            <input type="text" value="{{recentSavedReader?.name}}" name="name" class="form-control" id="reader-name">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.name" [ngModelOptions]="{standalone:true}" name="name" class="form-control" id="reader-name">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">NIC Number :</label>
-            <input type="text" value="{{recentSavedReader?.nic}}" name="nic" class="form-control" id="reader-nic">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.nic" [ngModelOptions]="{standalone:true}" name="nic" class="form-control" id="reader-nic">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Contact Number :</label>
-            <input type="text" value="{{recentSavedReader?.contact}}" name="contact" class="form-control" id="reader-contact">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.contact" [ngModelOptions]="{standalone:true}" name="contact" class="form-control" id="reader-contact">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Address :</label>
-            <input type="text" value="{{recentSavedReader?.address}}" name="address" class="form-control" id="reader-address">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.address" [ngModelOptions]="{standalone:true}" name="address" class="form-control" id="reader-address">
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="addReader()" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+        <button type="button" (click)="updateReader()" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
       </div>
     </div>
   </div>
