@@ -62,3 +62,44 @@
     </tbody>
   </table>
   <!-- table end -->
+
+  <!-- add reader modal start -->
+<div class="modal fade" id="add-book-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add a Book</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">ISBN Code :</label>
+              <input type="text" [(ngModel)]="newBook.isbn"  name="isbn" class="form-control" id="reader-name">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Title :</label>
+              <input type="text" [(ngModel)]="newBook.title" name="title" class="form-control" id="reader-nic">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Author :</label>
+              <input type="text" [(ngModel)]="newBook.author" name="author" class="form-control" id="reader-contact">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Category :</label>
+              <input type="text" [(ngModel)]="newBook.category" name="category" class="form-control" id="reader-address">
+            </div>
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Status :</label>
+                <input type="text" [(ngModel)]="newBook.status" name="status" class="form-control" id="reader-address">
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="addBook()" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- add reader modal end -->
