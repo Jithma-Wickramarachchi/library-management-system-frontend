@@ -64,41 +64,38 @@
   <!-- table end -->
 
   <!-- add reader modal start -->
-<div class="modal fade" id="add-book-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" data-bs-backdrop="static" id="add-book-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add a Book</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" (click)="clearNewBook()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form class="needs-validation" [formGroup] ="addBookForm">
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">ISBN Code :</label>
-              <input type="text" [(ngModel)]="newBook.isbn"  name="isbn" class="form-control" id="reader-name">
+              <input type="text" formControlName="isbn" [(ngModel)]="newBook.isbn"  name="isbn" class="form-control" id="book-isbn">
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Title :</label>
-              <input type="text" [(ngModel)]="newBook.title" name="title" class="form-control" id="reader-nic">
+              <input type="text" formControlName="title" [(ngModel)]="newBook.title" name="title" class="form-control" id="book-title">
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Author :</label>
-              <input type="text" [(ngModel)]="newBook.author" name="author" class="form-control" id="reader-contact">
+              <input type="text" formControlName="author" [(ngModel)]="newBook.author" name="author" class="form-control" id="book-author">
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Category :</label>
-              <input type="text" [(ngModel)]="newBook.category" name="category" class="form-control" id="reader-address">
-            </div>
-            <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Status :</label>
-                <input type="text" [(ngModel)]="newBook.status" name="status" class="form-control" id="reader-address">
+                <label for="recipient-name" class="col-form-label">Category :</label>
+                <input type="text" formControlName="category" [(ngModel)]="newBook.category" name="category" class="form-control" id="rbook-category">
+              </div>
+              <div class="modal-footer">
+                <button type="button" (click)="clearNewBook()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" [disabled]="addBookForm.invalid" (click)="addBook()" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
               </div>
           </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" (click)="addBook()" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
-        </div>
+        
       </div>
     </div>
   </div>

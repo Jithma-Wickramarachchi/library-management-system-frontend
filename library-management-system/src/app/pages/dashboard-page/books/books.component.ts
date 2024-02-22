@@ -1,14 +1,14 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-books',
   standalone: true,
-  imports: [RouterLink, HttpClientModule, NgFor, CommonModule, FormsModule],
+  imports: [RouterLink, HttpClientModule, NgFor, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './books.component.html',
   styleUrl: './books.component.css'
 })
@@ -20,11 +20,18 @@ export class BooksComponent {
     title: null,
     author: null,
     category: null,
-    status: null
+    status: "available"
   };
+  addBookForm : FormGroup;
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, private formBuilder:FormBuilder) {
     this.http = httpClient;
+    this.addBookForm = formBuilder.group({
+      isbn : ['', Validators.required],
+      title : ['', Validators.required],
+      author : ['', Validators.required],
+      category : ['', Validators.required]
+    })
   }
 
   ngOnInit() {
@@ -37,7 +44,7 @@ export class BooksComponent {
       title: null,
       author: null,
       category: null,
-      status: null
+      status: "available"
     };
   }
   loadTable() {
