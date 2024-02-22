@@ -49,8 +49,8 @@
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
             </svg>
           </button>
-          <button class="btn btn-outline-danger mx-1" data-bs-toggle="modal"
-            data-bs-target="#delete-reader-modal">
+          <button class="btn btn-outline-danger mx-1" data-bs-toggle="modal" (click)="saveBook(book)"
+            data-bs-target="#delete-book-modal">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
               viewBox="0 0 16 16">
               <path
@@ -63,7 +63,7 @@
   </table>
   <!-- table end -->
 
-  <!-- add reader modal start -->
+  <!-- add book modal start -->
 <div class="modal fade" data-bs-backdrop="static" id="add-book-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -99,4 +99,26 @@
       </div>
     </div>
   </div>
-  <!-- add reader modal end -->
+  <!-- add book modal end -->
+
+  <!-- delete book modal starts -->
+<div class="modal fade" id="delete-book-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content">
+      <div class="modal-content rounded-3 shadow">
+        <div class="modal-body p-4 text-center">
+          <h5 class="mb-0">Delete Book</h5>
+          <p class="mb-0">Are you sure to delete <strong>{{newBook.title}}</strong> ?</p>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button type="button" (click)="deleteBook(newBook.isbn)"
+            class="btn btn-lg fs-6 col-6 py-3 m-0 rounded-0 border-end" data-bs-dismiss="modal"><strong
+              class="text-danger">Delete</strong></button>
+          <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0"
+            data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- delete book modal end -->

@@ -37,7 +37,9 @@ export class BooksComponent {
   ngOnInit() {
     this.loadTable();
   }
-
+  saveBook(book : any){
+    this.newBook = book;
+  }
   clearNewBook() {
     this.newBook = {
       isbn: null,
@@ -63,8 +65,19 @@ export class BooksComponent {
       });
       this.ngOnInit();
       this.clearNewBook();
-    }, () => {
-      
+    })
+  }
+  deleteBook(isbn : any){
+    this.http.delete(`http://localhost:8080/book/${isbn}`).subscribe((data)=>{
+      console.log(data);
+    },()=>{
+      Swal.fire({
+        title: "Successfull!",
+        text: `Book \"${this.newBook.title}\" Deleted successfully`,
+        icon: "success"
+      });
+      this.ngOnInit();
+      this.clearNewBook();
     })
   }
 
