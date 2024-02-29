@@ -22,7 +22,15 @@ export class BooksComponent {
     category: null,
     status: "available"
   };
+  newUpdateBook = {
+    isbn: null,
+    title: null,
+    author: null,
+    category: null,
+    status: null as string | null
+  };
   addBookForm : FormGroup;
+  updateBookStatus = new FormControl('');
 
   constructor(httpClient: HttpClient, private formBuilder:FormBuilder) {
     this.http = httpClient;
@@ -31,7 +39,7 @@ export class BooksComponent {
       title : ['', Validators.required],
       author : ['', Validators.required],
       category : ['', Validators.required]
-    })
+    });
   }
 
   ngOnInit() {
@@ -39,6 +47,10 @@ export class BooksComponent {
   }
   saveBook(book : any){
     this.newBook = book;
+  }
+  saveUpdateBook(book : any){
+    this.newUpdateBook = book;
+    this.newUpdateBook.status = this.updateBookStatus.value;
   }
   clearNewBook() {
     this.newBook = {
@@ -50,13 +62,13 @@ export class BooksComponent {
     };
   }
   loadTable() {
-    this.http.get('http://localhost:8080/book').subscribe((data) => {
+    this.http.get('http://localhost:8081/book').subscribe((data) => {
       console.log(data)
       this.bookList = data;
     })
   }
   addBook() {
-    this.http.post('http://localhost:8080/book', this.newBook).subscribe((data) => {
+    this.http.post('http://localhost:8081/book', this.newBook).subscribe((data) => {
       console.log(data);
       Swal.fire({
         title: "Successfull!",
@@ -68,12 +80,25 @@ export class BooksComponent {
     })
   }
   deleteBook(isbn : any){
-    this.http.delete(`http://localhost:8080/book/${isbn}`).subscribe((data)=>{
+    this.http.delete(`http://localhost:8081/book/${isbn}`).subscribe((data)=>{
       console.log(data);
     },()=>{
       Swal.fire({
         title: "Successfull!",
         text: `Book \"${this.newBook.title}\" Deleted successfully`,
+        icon: "success"
+      });
+      this.ngOnInit();
+      this.clearNewBook();
+    })
+  }
+  updateBook(){
+    this.http.post('http://localhost:8081/book',this.newUpdateBook).subscribe((data)=>{
+      console.log(data);
+    },()=>{
+      Swal.fire({
+        title: "Successfull!",
+        text: `Book \"${this.newBook.title}\" Updated successfully`,
         icon: "success"
       });
       this.ngOnInit();

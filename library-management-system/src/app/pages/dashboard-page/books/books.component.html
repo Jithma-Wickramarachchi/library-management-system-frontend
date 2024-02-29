@@ -39,8 +39,8 @@
         <td>{{book.category}}</td>
         <td>{{book.status}}</td>
         <td>
-          <button  class="btn btn-outline-success mx-1" data-bs-toggle="modal"
-          data-bs-target="#update-reader-modal">
+          <button  class="btn btn-outline-success mx-1" data-bs-toggle="modal" (click)="saveUpdateBook(book)"
+          data-bs-target="#update-book-modal">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
               viewBox="0 0 16 16">
               <path
@@ -122,3 +122,48 @@
   </div>
 </div>
 <!-- delete book modal end -->
+
+<!-- update book modal start -->
+<div class="modal fade" id="update-book-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Book</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label disabled" >ISBN :</label>
+            <input type="text" [(ngModel)]="newUpdateBook && newUpdateBook.isbn" [ngModelOptions]="{standalone:true}" name="readerId" class="form-control" id="reader-id" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Title :</label>
+            <input type="text" [(ngModel)]="newBook && newBook.title" [ngModelOptions]="{standalone:true}" name="name" class="form-control" id="reader-name">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Author :</label>
+            <input type="text" [(ngModel)]="newBook && newBook.author" [ngModelOptions]="{standalone:true}" name="nic" class="form-control" id="reader-nic">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Category :</label>
+            <input type="text" [(ngModel)]="newBook && newBook.category" [ngModelOptions]="{standalone:true}" name="contact" class="form-control" id="reader-contact">
+          </div>
+          <div class="mb-3">
+            <label for="book-st4" class="form-label">Status : </label>
+            <select class="form-select" id="book-status" [formControl]="updateBookStatus" required>
+              <option value="">{{newUpdateBook.status}}</option>
+              <option value="available" *ngIf="newUpdateBook.status!='available'">available</option>
+              <option value="borrowed" *ngIf="newUpdateBook.status!='borrowed'">borrowed</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="updateBook()" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- update book modal end -->
