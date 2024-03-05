@@ -1,1 +1,1 @@
-## This is ongoing Project. All implemented codes will show in 'dev' Branch.
+## This is an ongoing Project. All implemented codes will show in 'dev' Branch.
