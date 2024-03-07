@@ -1,6 +1,6 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_BOOTSTRAP_LISTENER, Component, NgModule} from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, Component, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -21,6 +21,7 @@ export class ReadersComponent {
   public recentSavedReader: any;
   public recentSavedUpdateReader: any;
 
+
   public newReader = {
     name: null,
     nic: null,
@@ -34,15 +35,16 @@ export class ReadersComponent {
 
   ngOnInit(): void {
     this.loadReaders();
+    this.validate();
   }
 
   saveReader(reader: any) {
     this.recentSavedReader = reader;
   }
-  saveReaderWithId(reader : any){
+  saveReaderWithId(reader: any) {
     this.recentSavedUpdateReader = reader;
   }
-  clearNewReader(){
+  clearNewReader() {
     this.newReader = {
       name: null,
       nic: null,
@@ -50,14 +52,31 @@ export class ReadersComponent {
       address: null
     };
     this.recentSavedUpdateReader = {
-      readerId : null,
+      readerId: null,
       name: null,
       nic: null,
       contact: null,
       address: null
     };
   }
-
+  validate() {
+    'use strict';
+  
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation');
+  
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!(form instanceof HTMLFormElement) || !form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+  
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }
   loadReaders() {
     this.http.get('http://localhost:8080/reader').subscribe((data) => {
       this.readersList = data;
@@ -68,7 +87,7 @@ export class ReadersComponent {
     this.http.delete(`http://localhost:8080/reader/${id}`).subscribe((data) => {
       this.readersList = data;
       console.log(this.readersList)
-    }, () =>{
+    }, () => {
       Swal.fire({
         title: "Successfull!",
         text: "Reader Deleted successfully",
@@ -83,7 +102,7 @@ export class ReadersComponent {
       console.log(data);
       Swal.fire({
         title: "Successfull!",
-        text: "Reader \'"+this.newReader.name+"\' added successfully",
+        text: "Reader \'" + this.newReader.name + "\' added successfully",
         icon: "success"
       });
       this.clearNewReader();
@@ -95,12 +114,14 @@ export class ReadersComponent {
       console.log(data);
       Swal.fire({
         title: "Successfull!",
-        text: "Reader \'"+this.recentSavedUpdateReader.name+"\' Updated successfully",
+        text: "Reader \'" + this.recentSavedUpdateReader.name + "\' Updated successfully",
         icon: "success"
       });
       this.clearNewReader();
       this.ngOnInit();
     })
   }
+
+
 
 }

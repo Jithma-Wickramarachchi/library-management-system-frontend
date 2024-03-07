@@ -6,9 +6,9 @@
     <form class="d-flex ms-auto" role="search">
       <input class="form-control me-2 d-flex " type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-success justify-content-end " type="submit">Search</button>
-      <button class="btn btn-primary justify-content-end ms-5 " (click)="clearNewReader()"
-        data-bs-toggle="modal" data-bs-target="#add-reader-modal"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-          height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+      <button class="btn btn-primary justify-content-end ms-5 " (click)="clearNewReader()" data-bs-toggle="modal"
+        data-bs-target="#add-reader-modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+          fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
           <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
           <path fill-rule="evenodd"
             d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5" />
@@ -39,7 +39,7 @@
       <td>{{reader.contact}}</td>
       <td>
         <button (click)="saveReaderWithId(reader)" class="btn btn-outline-success mx-1" data-bs-toggle="modal"
-        data-bs-target="#update-reader-modal">
+          data-bs-target="#update-reader-modal">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
             viewBox="0 0 16 16">
             <path
@@ -67,6 +67,82 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+        <h1 class="modal-title fs-5 my-auto" id="exampleModalLabel">Create a new Reader Profile</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="container">
+        <form class="row g-3 needs-validation" novalidate>
+          <div class="col-6">
+            <label for="validationCustom01" class="form-label mb-0 mt-2">First name</label>
+            <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="validationCustom02" class="form-label mb-0 mt-2">Last name</label>
+            <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="validationCustom03" class="form-label mb-0">NIC</label>
+            <input type="text" class="form-control" id="validationCustom03" required>
+            <div class="invalid-feedback">
+              Please provide a valid city.
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="validationCustom03" class="form-label mb-0">Contact</label>
+            <input type="text" class="form-control" id="validationCustom03" required>
+            <div class="invalid-feedback">
+              Please provide a valid city.
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="validationCustom03" class="form-label mb-0">Contact</label>
+            <input type="text" class="form-control" id="validationCustom03" required>
+            <div class="invalid-feedback">
+              Please provide a valid city.
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="validationCustom04" class="form-label">State</label>
+            <select class="form-select" id="validationCustom04" required>
+              <option selected disabled value="">Choose...</option>
+              <option>...</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid state.
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="validationCustom05" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="validationCustom05" required>
+            <div class="invalid-feedback">
+              Please provide a valid zip.
+            </div>
+          </div>
+          <div class="col-12">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- add reader modal end -->
+
+<!-- add reader modal start -->
+<div class="modal fade" id="add-reader-modal-old" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Add a Reader</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -74,7 +150,7 @@
         <form>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Name :</label>
-            <input type="text" [(ngModel)]="newReader.name"  name="name" class="form-control" id="reader-name">
+            <input type="text" [(ngModel)]="newReader.name" name="name" class="form-control" id="reader-name">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">NIC Number :</label>
@@ -110,24 +186,29 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label disabled" >ReaderID :</label>
-            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.readerId" [ngModelOptions]="{standalone:true}" name="readerId" class="form-control" id="reader-id" disabled>
+            <label for="recipient-name" class="col-form-label disabled">ReaderID :</label>
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.readerId"
+              [ngModelOptions]="{standalone:true}" name="readerId" class="form-control" id="reader-id" disabled>
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Name :</label>
-            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.name" [ngModelOptions]="{standalone:true}" name="name" class="form-control" id="reader-name">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.name"
+              [ngModelOptions]="{standalone:true}" name="name" class="form-control" id="reader-name">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">NIC Number :</label>
-            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.nic" [ngModelOptions]="{standalone:true}" name="nic" class="form-control" id="reader-nic">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.nic"
+              [ngModelOptions]="{standalone:true}" name="nic" class="form-control" id="reader-nic">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Contact Number :</label>
-            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.contact" [ngModelOptions]="{standalone:true}" name="contact" class="form-control" id="reader-contact">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.contact"
+              [ngModelOptions]="{standalone:true}" name="contact" class="form-control" id="reader-contact">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Address :</label>
-            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.address" [ngModelOptions]="{standalone:true}" name="address" class="form-control" id="reader-address">
+            <input type="text" [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.address"
+              [ngModelOptions]="{standalone:true}" name="address" class="form-control" id="reader-address">
           </div>
         </form>
       </div>
