@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_BOOTSTRAP_LISTENER, Component, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-readers',
   standalone: true,
-  imports: [HttpClientModule, RouterLink, FormsModule, CommonModule, NgFor],
+  imports: [HttpClientModule, RouterLink, FormsModule, CommonModule, NgFor, ReactiveFormsModule],
   templateUrl: './readers.component.html',
   styleUrl: './readers.component.css'
 })
@@ -20,22 +20,34 @@ export class ReadersComponent {
   public readersList: any;
   public recentSavedReader: any;
   public recentSavedUpdateReader: any;
+  public addReaderForm : any;
 
 
   public newReader = {
-    name: null,
+    firstName: null,
+    lastName: null,
     nic: null,
     contact: null,
-    address: null
+    address: null,
+    gmail: null
   }
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, formBuilder : FormBuilder) {
     this.http = httpClient;
+    this.addReaderForm = formBuilder.group({
+      firstName : ['', Validators.required],
+      lastName : ['', Validators.required],
+      nic : ['', [Validators.required, Validators.pattern(/^\d{12}|\d{9}v$/)]],
+      contact : ['', [Validators.required, Validators.pattern(/^0\d{9}$/)]],
+      address : ['', Validators.required],
+      gmail : ['', [Validators.required, Validators.pattern(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i)]]
+    })
+
+
   }
 
   ngOnInit(): void {
     this.loadReaders();
-    this.validate();
   }
 
   saveReader(reader: any) {
@@ -46,36 +58,21 @@ export class ReadersComponent {
   }
   clearNewReader() {
     this.newReader = {
-      name: null,
+      firstName: null,
+      lastName: null,
       nic: null,
       contact: null,
-      address: null
+      address: null,
+      gmail: null
     };
     this.recentSavedUpdateReader = {
-      readerId: null,
-      name: null,
+      firstName: null,
+      lastName: null,
       nic: null,
       contact: null,
-      address: null
+      address: null,
+      gmail: null
     };
-  }
-  validate() {
-    'use strict';
-  
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll('.needs-validation');
-  
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!(form instanceof HTMLFormElement) || !form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-  
-        form.classList.add('was-validated');
-      }, false);
-    });
   }
   loadReaders() {
     this.http.get('http://localhost:8080/reader').subscribe((data) => {
@@ -102,7 +99,7 @@ export class ReadersComponent {
       console.log(data);
       Swal.fire({
         title: "Successfull!",
-        text: "Reader \'" + this.newReader.name + "\' added successfully",
+        text: "Reader \'" + this.newReader.firstName + "\' added successfully",
         icon: "success"
       });
       this.clearNewReader();
