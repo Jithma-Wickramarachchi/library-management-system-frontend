@@ -37,7 +37,7 @@ export class ReadersComponent {
     this.addReaderForm = formBuilder.group({
       firstName : ['', Validators.required],
       lastName : ['', Validators.required],
-      nic : ['', [Validators.required, Validators.pattern(/^\d{12}|\d{9}v$/)]],
+      nic : ['', [Validators.required, Validators.pattern(/^\d{12}$|^\d{9}v$/)]],
       contact : ['', [Validators.required, Validators.pattern(/^0\d{9}$/)]],
       address : ['', Validators.required],
       gmail : ['', [Validators.required, Validators.pattern(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i)]]
