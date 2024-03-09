@@ -1,0 +1,113 @@
+<!-- add reader modal start -->
+<div class="modal fade" data-bs-backdrop="static" id="add-reader-modal" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title fs-4 text-center h1 ms-auto" id="exampleModalLabel">Create a new Reader Profile</p>
+        <button type="button" class="btn-close" (click)="addReaderForm.reset()" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="container">
+        <form class="row g-3 " [formGroup]="addReaderForm" (submit)="addReader()">
+          <div class="col-6">
+            <label for="add-reader-firstName" class="form-label mb-1 mt-3">First Name</label>
+            <input [(ngModel)]="newReader.firstName" formControlName="firstName" [ngClass]="(addReaderForm.get('firstName').touched || addReaderForm.get('firstName').dirty) 
+              && addReaderForm.get('firstName').errors ? 'is-invalid':'' ||
+               (addReaderForm.get('firstName').touched || addReaderForm.get('firstName').dirty) 
+              && !addReaderForm.get('firstName').invalid ? 'is-valid':''" type="text" class="form-control"
+              id="add-reader-firstName">
+            <div class="invalid-feedback">
+              Please provide a valid first name
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="add-reader-lastName" class="form-label mb-1 mt-3">Last Name</label>
+            <input type="text" [(ngModel)]="newReader.lastName" class="form-control" id="add-reader-lastName"
+              formControlName="lastName" [ngClass]="(addReaderForm.get('lastName').touched || addReaderForm.get('lastName').dirty) &&
+                addReaderForm.get('lastName').errors ? 'is-invalid' : '' ||
+                (addReaderForm.get('lastName').touched || addReaderForm.get('lastName').dirty) &&
+                !addReaderForm.get('lastName').invalid ? 'is-valid' : ''">
+            <div class="invalid-feedback">
+              Please provide a valid last name
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="add-reader-nic" class="form-label mb-0">NIC</label>
+            <input [(ngModel)]="newReader.nic" name="nic" type="text" class="form-control" id="add-reader-nic"
+              formControlName="nic" [ngClass]="(addReaderForm.get('nic').touched || addReaderForm.get('nic').dirty) &&
+              addReaderForm.get('nic').hasError('required') ? 'is-invalid' : '' ||
+            (addReaderForm.get('nic').touched || addReaderForm.get('nic').dirty) &&
+              addReaderForm.get('nic').hasError('pattern') ? 'is-invalid' : '' ||
+            (addReaderForm.get('nic').touched || addReaderForm.get('nic').dirty) &&
+              !addReaderForm.get('nic').invalid ? 'is-valid' : ''">
+            <div class="invalid-feedback">
+              {{
+              addReaderForm.get('nic').hasError('required') ? "Please provide your NIC number" : ''
+              }}
+              {{
+              addReaderForm.get('nic').hasError('pattern') ? "Please provide valid NIC (12 digits or 9 digits with 'v')"
+              : ''
+              }}
+
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="add-reader-contact" class="form-label mb-0">Contact</label>
+            <input [(ngModel)]="newReader.contact" type="text" class="form-control" id="add-reader-contact"
+              formControlName="contact" [ngClass]="(addReaderForm.get('contact').touched || addReaderForm.get('contact').dirty) &&
+              addReaderForm.get('contact').hasError('required') ? 'is-invalid' : '' ||
+            (addReaderForm.get('contact').touched || addReaderForm.get('contact').dirty) &&
+              addReaderForm.get('contact').hasError('pattern') ? 'is-invalid' : '' ||
+            (addReaderForm.get('contact').touched || addReaderForm.get('contact').dirty) &&
+              !addReaderForm.get('contact').invalid ? 'is-valid' : ''">
+            <div class="invalid-feedback">
+              {{
+              addReaderForm.get('contact').hasError('required') ? "Please provide your Contact number" : ''
+              }}
+              {{
+              addReaderForm.get('contact').hasError('pattern') ? "Please provide valid NIC (10 digits starting with 0)"
+              : ''
+              }}
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="add-reader-address" class="form-label mb-0">Address</label>
+            <textarea [(ngModel)]="newReader.address" type="text" class="form-control" id="address"
+              formControlName="address" [ngClass]="(addReaderForm.get('address').touched || addReaderForm.get('address').dirty) &&
+                addReaderForm.get('address').errors ? 'is-invalid' : '' ||
+              (addReaderForm.get('address').touched || addReaderForm.get('address').dirty) &&
+                !addReaderForm.get('address').invalid ? 'is-valid' : ''"></textarea>
+            <div class="invalid-feedback">
+              Please provide a valid Address.
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="add-reader-gmail" class="form-label mb-0">Gmail</label>
+            <input [(ngModel)]="newReader.gmail" type="text" class="form-control" id="add-reader-gmail"
+              formControlName="gmail" [ngClass]="(addReaderForm.get('gmail').touched || addReaderForm.get('gmail').dirty) &&
+                addReaderForm.get('gmail').hasError('required') ? 'is-invalid' : '' ||
+              (addReaderForm.get('gmail').touched || addReaderForm.get('gmail').dirty) &&
+                addReaderForm.get('gmail').hasError('pattern') ? 'is-invalid' : '' ||
+              (addReaderForm.get('gmail').touched || addReaderForm.get('gmail').dirty) &&
+                !addReaderForm.get('gmail').invalid ? 'is-valid' : ''">
+            <div class="invalid-feedback">
+              {{
+                addReaderForm.get('gmail').hasError('required') ? "Please provide your Gmail Address" : ''
+                }}
+                {{
+                addReaderForm.get('gmail').hasError('pattern') ? "Please provide valid Gmail ( yourmail@gmail.com )"
+                : ''
+                }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="addReaderForm.reset()" data-bs-dismiss="modal">Close</button>
+            <button [disabled]="addReaderForm.invalid" type="submit" data-bs-dismiss="modal" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- add reader modal end -->

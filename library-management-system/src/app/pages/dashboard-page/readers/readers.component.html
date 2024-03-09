@@ -23,20 +23,26 @@
   <thead>
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">Name</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
       <th scope="col">NIC</th>
+      <th scope="col">Contact</th>
       <th scope="col">Address</th>
-      <th scope="col">Contacts</th>
+      <th scope="col">Gmail</th>
+      <th scope="col">Status</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let reader of readersList">
       <th scope="row">RID#{{reader.readerId}}</th>
-      <td>{{reader.name}}</td>
+      <td>{{reader.firstName}}</td>
+      <td>{{reader.lastName}}</td>
       <td>{{reader.nic}}</td>
-      <td>{{reader.address}}</td>
       <td>{{reader.contact}}</td>
+      <td>{{reader.address}}</td>
+      <td>{{reader.gmail}}</td>
+      <td>{{reader.status}}</td>
       <td>
         <button (click)="saveReaderWithId(reader)" class="btn btn-outline-success mx-1" data-bs-toggle="modal"
           data-bs-target="#update-reader-modal">
@@ -62,31 +68,34 @@
 </table>
 <!-- table end -->
 
-<!-- add reader modal start -->
-<div class="modal fade" data-bs-backdrop="static" id="add-reader-modal" tabindex="-1"
+<app-add-modal (loadReaders)="loadReaders()"></app-add-modal>
+
+<!-- update-modal-start -->
+<div class="modal fade" data-bs-backdrop="static" id="update-reader-modal" tabindex="-1"
   aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <p class="modal-title fs-4 text-center h1 ms-auto" id="exampleModalLabel">Create a new Reader Profile</p>
+        <p class="modal-title fs-4 text-center h1 ms-auto" id="exampleModalLabel">Update a Existing Reader Profile</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="container">
-        <form class="row g-3 " [formGroup]="addReaderForm" (submit)="addReader()">
+        <form class="row g-3 " [formGroup]="addReaderForm" (submit)="updateReader()">
           <div class="col-6">
-            <label for="validationCustom01" class="form-label mb-1 mt-3">First Name</label>
-            <input [(ngModel)]="newReader.firstName" formControlName="firstName" [ngClass]="(addReaderForm.get('firstName').touched || addReaderForm.get('firstName').dirty) 
+            <label for="add-reader-firstName" class="form-label mb-1 mt-3">First Name</label>
+            <input [(ngModel)]="recentSavedUpdateReader && recentSavedUpdateReader.readerId"
+             formControlName="firstName" [ngClass]="(addReaderForm.get('firstName').touched || addReaderForm.get('firstName').dirty) 
               && addReaderForm.get('firstName').errors ? 'is-invalid':'' ||
                (addReaderForm.get('firstName').touched || addReaderForm.get('firstName').dirty) 
               && !addReaderForm.get('firstName').invalid ? 'is-valid':''" type="text" class="form-control"
-              id="validationCustom01">
+              id="add-reader-firstName">
             <div class="invalid-feedback">
               Please provide a valid first name
             </div>
           </div>
           <div class="col-6">
-            <label for="validationCustom02" class="form-label mb-1 mt-3">Last Name</label>
-            <input type="text" [(ngModel)]="newReader.lastName" class="form-control" id="validationCustom02"
+            <label for="add-reader-lastName" class="form-label mb-1 mt-3">Last Name</label>
+            <input type="text" [(ngModel)]="newReader.lastName" class="form-control" id="add-reader-lastName"
               formControlName="lastName" [ngClass]="(addReaderForm.get('lastName').touched || addReaderForm.get('lastName').dirty) &&
                 addReaderForm.get('lastName').errors ? 'is-invalid' : '' ||
                 (addReaderForm.get('lastName').touched || addReaderForm.get('lastName').dirty) &&
@@ -96,8 +105,8 @@
             </div>
           </div>
           <div class="col-6">
-            <label for="validationCustom03" class="form-label mb-0">NIC</label>
-            <input [(ngModel)]="newReader.nic" name="nic" type="text" class="form-control" id="validationCustom03"
+            <label for="add-reader-nic" class="form-label mb-0">NIC</label>
+            <input [(ngModel)]="newReader.nic" name="nic" type="text" class="form-control" id="add-reader-nic"
               formControlName="nic" [ngClass]="(addReaderForm.get('nic').touched || addReaderForm.get('nic').dirty) &&
               addReaderForm.get('nic').hasError('required') ? 'is-invalid' : '' ||
             (addReaderForm.get('nic').touched || addReaderForm.get('nic').dirty) &&
@@ -116,8 +125,8 @@
             </div>
           </div>
           <div class="col-6">
-            <label for="validationCustom03" class="form-label mb-0">Contact</label>
-            <input [(ngModel)]="newReader.contact" type="text" class="form-control" id="validationCustom03"
+            <label for="add-reader-contact" class="form-label mb-0">Contact</label>
+            <input [(ngModel)]="newReader.contact" type="text" class="form-control" id="add-reader-contact"
               formControlName="contact" [ngClass]="(addReaderForm.get('contact').touched || addReaderForm.get('contact').dirty) &&
               addReaderForm.get('contact').hasError('required') ? 'is-invalid' : '' ||
             (addReaderForm.get('contact').touched || addReaderForm.get('contact').dirty) &&
@@ -135,8 +144,8 @@
             </div>
           </div>
           <div class="col-12">
-            <label for="validationCustom03" class="form-label mb-0">Address</label>
-            <textarea [(ngModel)]="newReader.address" type="text" class="form-control" id="validationCustom03"
+            <label for="add-reader-address" class="form-label mb-0">Address</label>
+            <textarea [(ngModel)]="newReader.address" type="text" class="form-control" id="address"
               formControlName="address" [ngClass]="(addReaderForm.get('address').touched || addReaderForm.get('address').dirty) &&
                 addReaderForm.get('address').errors ? 'is-invalid' : '' ||
               (addReaderForm.get('address').touched || addReaderForm.get('address').dirty) &&
@@ -146,8 +155,8 @@
             </div>
           </div>
           <div class="col-12">
-            <label for="validationCustom03" class="form-label mb-0">Gmail</label>
-            <input [(ngModel)]="newReader.gmail" type="text" class="form-control" id="validationCustom03"
+            <label for="add-reader-gmail" class="form-label mb-0">Gmail</label>
+            <input [(ngModel)]="newReader.gmail" type="text" class="form-control" id="add-reader-gmail"
               formControlName="gmail" [ngClass]="(addReaderForm.get('gmail').touched || addReaderForm.get('gmail').dirty) &&
               addReaderForm.get('gmail').hasError('required') ? 'is-invalid' : '' ||
             (addReaderForm.get('gmail').touched || addReaderForm.get('gmail').dirty) &&
@@ -166,7 +175,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button [disabled]="addReaderForm.invalid" type="submit" class="btn btn-success">Save</button>
+            <button [disabled]="addReaderForm.invalid" type="submit" data-bs-dismiss="modal" class="btn btn-success">Update</button>
           </div>
         </form>
       </div>
@@ -174,46 +183,9 @@
     </div>
   </div>
 </div>
-<!-- add reader modal end -->
+<!-- update-modal-end -->
 
-<!-- add reader modal start -->
-<div class="modal fade" id="add-reader-modal-old" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a Reader</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Name :</label>
-            <input type="text" [(ngModel)]="newReader.firstName" name="name" class="form-control" id="reader-name">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">NIC Number :</label>
-            <input type="text" [(ngModel)]="newReader.nic" name="nic" class="form-control" id="reader-nic">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Contact Number :</label>
-            <input type="text" [(ngModel)]="newReader.contact" name="contact" class="form-control" id="reader-contact">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Address :</label>
-            <input type="text" [(ngModel)]="newReader.address" name="address" class="form-control" id="reader-address">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="addReader()" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- add reader modal end -->
-
-<!-- update reader modal start -->
+<!-- update reader modal start
 <div class="modal fade" id="update-reader-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -256,7 +228,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- update reader modal end -->
 
 <!-- delete reader modal starts -->

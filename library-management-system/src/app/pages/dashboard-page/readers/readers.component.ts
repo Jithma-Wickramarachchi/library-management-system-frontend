@@ -1,15 +1,16 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_BOOTSTRAP_LISTENER, Component, NgModule } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, ChangeDetectionStrategy, ChangeDetectorRef, Component, NgModule } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AddModalComponent } from './add-modal/add-modal.component';
 
 @Component({
   selector: 'app-readers',
   standalone: true,
-  imports: [HttpClientModule, RouterLink, FormsModule, CommonModule, NgFor, ReactiveFormsModule],
+  imports: [HttpClientModule, RouterLink, FormsModule, CommonModule, NgFor, ReactiveFormsModule, AddModalComponent],
   templateUrl: './readers.component.html',
   styleUrl: './readers.component.css'
 })
@@ -29,9 +30,11 @@ export class ReadersComponent {
     nic: null,
     contact: null,
     address: null,
-    gmail: null
+    gmail: null,
+    status : 'not borrowed'
   }
 
+  
   constructor(httpClient: HttpClient, formBuilder : FormBuilder) {
     this.http = httpClient;
     this.addReaderForm = formBuilder.group({
@@ -63,7 +66,8 @@ export class ReadersComponent {
       nic: null,
       contact: null,
       address: null,
-      gmail: null
+      gmail: null,
+      status : 'not borrowed'
     };
     this.recentSavedUpdateReader = {
       firstName: null,
@@ -95,6 +99,7 @@ export class ReadersComponent {
     })
   }
   addReader() {
+    console.log(this.newReader);
     this.http.post('http://localhost:8080/reader', this.newReader).subscribe((data) => {
       console.log(data);
       Swal.fire({
@@ -105,6 +110,7 @@ export class ReadersComponent {
       this.clearNewReader();
       this.ngOnInit();
     })
+    
   }
   updateReader() {
     this.http.post('http://localhost:8080/reader', this.recentSavedUpdateReader).subscribe((data) => {
